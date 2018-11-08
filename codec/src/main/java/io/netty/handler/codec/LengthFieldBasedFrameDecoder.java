@@ -182,13 +182,19 @@ import io.netty.handler.codec.serialization.ObjectDecoder;
  * @see LengthFieldPrepender
  */
 public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
-
+    //数据存储采用大端模式或小端模式,默认采用大端
     private final ByteOrder byteOrder;
+    //报文最大长度
     private final int maxFrameLength;
+    //报文长度字段在整个报文中的偏移量
     private final int lengthFieldOffset;
+    //报文长度字段所占的字节，一般占1、2、3、4、8字节，其他的需要自己重写getUnadjustedFrameLength方法
     private final int lengthFieldLength;
+    //lengthFieldOffset + lengthFieldLength  长度字段结束位置的偏移量
     private final int lengthFieldEndOffset;
+    //长度字段值的补偿值，因为有时候报文的字段长度不包括长度字段本身占用的字节
     private final int lengthAdjustment;
+    //可以去除报文头的部分
     private final int initialBytesToStrip;
     private final boolean failFast;
     private boolean discardingTooLongFrame;
@@ -259,7 +265,7 @@ public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
      *        soon as the decoder notices the length of the frame will exceed
      *        <tt>maxFrameLength</tt> regardless of whether the entire frame
      *        has been read.  If <tt>false</tt>, a {@link TooLongFrameException}
-     *        is thrown after the entire frame that exceeds <tt>maxFrameLength</tt>
+     *        is thrown after the entire Sframe that exceeds <tt>maxFrameLength</tt>
      *        has been read.
      */
     public LengthFieldBasedFrameDecoder(
