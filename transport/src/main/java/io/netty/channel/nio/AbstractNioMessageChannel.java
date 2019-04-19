@@ -57,9 +57,10 @@ public abstract class AbstractNioMessageChannel extends AbstractNioChannel {
 
     private final class NioMessageUnsafe extends AbstractNioUnsafe {
 
+        //用于临时存放连接
         private final List<Object> readBuf = new ArrayList<Object>();
 
-        //3.读取连接请求
+        //3.读取连接请求 此处的read处理的是连接请求
         @Override
         public void read() {
             assert eventLoop().inEventLoop();
